@@ -1,4 +1,4 @@
-# Codex Smart Image 0.1.1 产品说明
+# Codex Smart Image 0.1.2 产品说明
 
 ## 已确认范围
 
@@ -19,6 +19,14 @@ GET /models 只读列表。POST /images/generations 发送 model、prompt、n=1�
 ## 持久数据
 
 普通配置位于本机 CodexSmartImage/config.json，schema=1；Key 独立加密。requests/ 保存 ID 摘要记录；图片由用户项目管理。CODEX_SMART_IMAGE_HOME 可隔离数据。未知配置 schema 报错，不覆盖。卸载保留配置、凭据、记录、图片。
+
+## 配置与重置修正
+
+[CONFIRMED] scripts/configure.ps1 从自身位置定位运行代码，避免依赖旧终端变量或开发机绝对路径；支持 PythonPath、CheckOnly 和 ReplaceKey。原有 Key 默认保留，新建或显式替换时只通过 Python 隐藏输入接收。普通选择提示不接收 Key。
+
+[CONFIRMED] scripts/reset.ps1 不带 ConfirmReset 只预览；显式确认后清理旧配置、加密 Key、请求记录、日志及写入临时文件，保留安装文件和项目图片。先完整检查重定向目录和环境变量 Key，再执行删除；拒绝会误清系统、用户主目录或运行目录的目标。Reconfigure 在同一终端接续配置。更新或安装不会自动重置用户数据。
+
+[CONFIRMED] 清理本地 Key 不会撤销服务商侧凭据，也不能删除聊天截图。删除请求记录会移除历史去重保护，不可借此重发结果未知的收费请求。
 
 ## 工程默认及验收
 

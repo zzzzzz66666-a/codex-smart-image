@@ -1,6 +1,6 @@
 {
   "name": "smart-image",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Automatically choose useful raster assets and generate them with the configured dedicated GPT Image 2 API.",
   "skills": "./skills/",
   "mcpServers": "./.mcp.json",

@@ -21,7 +21,8 @@ def prepare(destination):
         shutil.copytree(ROOT/name, plugin/name, dirs_exist_ok=True,
                         ignore=shutil.ignore_patterns('__pycache__','*.pyc'))
     (plugin/'scripts').mkdir(parents=True,exist_ok=True)
-    shutil.copy2(ROOT/'scripts/run.py',plugin/'scripts/run.py')
+    for name in ('run.py','configure.ps1','reset.ps1','install.ps1','prepare_install.py','uninstall.ps1'):
+        shutil.copy2(ROOT/'scripts'/name,plugin/'scripts'/name)
     shutil.copy2(ROOT/'README.md',plugin/'README.md')
     mcp = {'mcpServers':{'smart_image':{
         'command':sys.executable,'args':[str(plugin/'scripts/run.py'),'serve'],

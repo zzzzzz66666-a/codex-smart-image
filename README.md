@@ -4,6 +4,8 @@
 
 **公开版本不包含任何用户服务地址、账户或 API Key。** 兼容 POST /images/generations，可配置模型 ID，默认 gpt-image-2。
 
+当前版本 0.1.2：正式包含交互配置、显式更换 Key 和本地重置入口。已有 Key 默认保留，只有 -ReplaceKey 才进入隐藏输入；重置必须显式指定 -ConfirmReset。
+
 ## 安装
 
 详见 [中文安装指南](docs/INSTALL.zh-CN.md)。交给其他 AI 安装，使用 [安装 Skill](installer-skill/codex-smart-image-install/SKILL.md)。
@@ -12,7 +14,11 @@
 
     powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\install.ps1
 
-然后按指南在自己电脑上填写服务地址、准确模型 ID，并隐藏输入 Key。安装及模型列表查询不发起图片生成。
+然后在包根目录运行：
+
+    powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\configure.ps1
+
+按提示填写服务地址、模型 ID，再在隐藏输入处粘贴 Key。更换 Key 在命令末尾增加 -ReplaceKey。安装、配置和模型列表查询不发起图片生成。
 
 ## 功能
 
@@ -21,6 +27,7 @@
 - base64、直接或签名图片 URL，下载不携带 API Key。
 - 稳定 request_id 去重；未知结果不自动重发收费请求。
 - 原生 Codex 插件安装、更新、卸载，源码包及独立安装 Skill 包。
+- 配置入口可从解压包或安装目录运行，兼容空格/单引号路径；重置保留插件和项目图片。
 
 流程图、数据图表、已有 SVG 编辑使用对应工具。首版没有图生图或独立 GUI。不会静默切换到其他图像服务。
 

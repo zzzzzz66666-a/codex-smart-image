@@ -66,7 +66,7 @@ def dispatch(message, home):
     if method == 'initialize':
         requested = params.get('protocolVersion')
         version = requested if requested in ('2024-11-05','2025-03-26','2025-06-18') else '2025-06-18'
-        result = {'protocolVersion':version,'serverInfo':{'name':'smart-image','version':'0.1.1'},
+        result = {'protocolVersion':version,'serverInfo':{'name':'smart-image','version':'0.1.2'},
                   'capabilities':{'tools':{'listChanged':False}}}
     elif method == 'ping':
         result = {}

@@ -21,6 +21,8 @@ class PackageTests(unittest.TestCase):
             plugin = destination/'plugin'
             self.assertTrue((plugin/'docs/INSTALL.zh-CN.md').is_file())
             self.assertTrue((plugin/'installer-skill/codex-smart-image-install/SKILL.md').is_file())
+            for name in ('configure.ps1','reset.ps1','install.ps1','prepare_install.py','uninstall.ps1'):
+                self.assertTrue((plugin/'scripts'/name).is_file(),name)
             manifest = json.loads((plugin/'.codex-plugin/plugin.json').read_text(encoding='utf-8'))
             self.assertEqual(manifest['name'],'smart-image')
             mcp = json.loads((plugin/'.mcp.json').read_text(encoding='utf-8'))['mcpServers']['smart_image']
@@ -47,7 +49,7 @@ class PackageTests(unittest.TestCase):
                 self.assertFalse(any(n.endswith('.dpapi') or '__pycache__' in n or 'config.json' in n for n in names))
                 self.assertIsNone(z.testzip())
                 z.extractall(Path(d)/'unpacked')
-            run = Path(d)/'unpacked'/'codex-smart-image-0.1.1'/'scripts'/'run.py'
+            run = Path(d)/'unpacked'/'codex-smart-image-0.1.2'/'scripts'/'run.py'
             env = {**os.environ,'CODEX_SMART_IMAGE_HOME':str(Path(d)/'data'),'CODEX_SMART_IMAGE_API_KEY':'','PYTHONIOENCODING':'utf-8'}
             smoke = subprocess.run([sys.executable,str(run),'status'],capture_output=True,text=True,
                                    encoding='utf-8',timeout=10,env=env,cwd=d)

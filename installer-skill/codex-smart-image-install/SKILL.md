@@ -5,7 +5,7 @@ description: Use when installing, configuring, verifying, upgrading, or uninstal
 
 # 安装 Codex 智能生图
 
-适用 0.1.1。目标包根目录同时包含 scripts/install.ps1、scripts/run.py 和 .codex-plugin/plugin.json。用户指定目录优先；本文件单独提供时先找到对应源码或发布包。此 Skill 不是插件运行代码。
+适用 0.1.2。目标包根目录同时包含 scripts/install.ps1、scripts/configure.ps1、scripts/reset.ps1、scripts/run.py 和 .codex-plugin/plugin.json。用户指定目录优先；本文件单独提供时先找到对应源码或发布包。此 Skill 不是插件运行代码。
 
 ## 检查与安装
 
@@ -21,9 +21,13 @@ description: Use when installing, configuring, verifying, upgrading, or uninstal
 
 ## 私有配置
 
-发布包没有预填服务地址。用户在自己的交互终端运行 configure --base-url <本地输入> --model <准确ID>，Key 由 getpass 隐藏输入后 DPAPI 加密。不要让用户把 Key 发到聊天，不把 Key 写入命令参数、脚本、普通 JSON、MCP 或 shell 历史。缺地址时让用户本地输入，不猜测或搜索其他聊天。不能安全完成交互输入时，给用户命令并标明待办，继续无需凭据的检查。
+发布包没有预填服务地址。优先让用户在自己的交互终端运行 powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\configure.ps1。该入口从自身位置定位代码，调用相对路径 run.py，避免旧终端变量和空格/单引号路径错误。-CheckOnly 只查启动，-PythonPath 指定 Python。
+
+依次填写地址和模型，只有真正的 API Key 隐藏输入提示才接收 Key。已有 Key 自动保留；明确更换加 -ReplaceKey，不再让用户在可见选择框中输入 replace。Key 由 getpass 隐藏输入并 DPAPI 加密；粘贴后无文字/星号正常。不要让用户把 Key 发到聊天，不写进命令参数、脚本、普通 JSON、MCP 或历史。缺地址让用户本地输入，不猜测或搜索其他聊天。无法安全交互时给出命令并标明待办，继续无需凭据的检查。
 
 已有配置不覆盖或清空。普通配置修改使用 --keep-key。服务地址和模型 ID 同样按私有本地配置处理。status 会显示地址；公开报告只汇报 ready/provider_configured/key_configured，省略实际地址。
+
+更换 Key 前先确认来源。如果使用 CODEX_SMART_IMAGE_API_KEY，环境值优先于加密本地文件；先让用户在自己的终端及持久环境设置中移除或更新它，再开新终端。-ReplaceKey 遇到活动环境 Key 会在修改前停止，不用本地 ready 状态宣称旧环境凭据已替换或撤销。
 
 ## 验证、更新和卸载
 
@@ -34,3 +38,9 @@ description: Use when installing, configuring, verifying, upgrading, or uninstal
 安装后新开 Codex 聊天；工具未出现时按指南检查或重启，用显式 $smart-image 验证。更新在新版目录重复安装。卸载用 scripts/uninstall.ps1，默认保留用户配置和图片；clear-key 需用户明确要求删除 Key。
 
 汇报包版本、安装结果、配置状态、实际验证与待办；不回显服务地址或凭据。
+
+## 用户明确要求清理时
+
+安装、升级和普通配置不运行 reset。用户明确要求清理旧配置/记录后，说明会删本地配置、加密 Key、请求记录、日志及相关临时文件，失去历史去重保护，保留插件和图片。先运行 scripts/reset.ps1 预览；授权覆盖删除范围后加 -ConfirmReset，可加 -Reconfigure 在同一终端重新配置。不能靠清记录来自动重发未知收费请求。
+
+重定向目录、过宽根目录和当前环境 Key 会在文件删除前拦截。环境变量由用户在自己设置中处理。本地清理不撤销服务商凭据，也不删除聊天或终端记录；曝光的 Key 应由用户在服务商后台撤销并更换。

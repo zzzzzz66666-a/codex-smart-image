@@ -49,7 +49,7 @@ class ImageService:
     def _request(self, url, *, body=None, auth=False, limit=MAX_RESPONSE_BYTES):
         if not self.settings.base_url:
             raise ImageError('missing_endpoint', '尚未配置服务地址，请在本地运行 configure --base-url。')
-        headers = {'User-Agent':'CodexSmartImage/0.1.1', 'Accept':'application/json' if auth else 'image/*'}
+        headers = {'User-Agent':'CodexSmartImage/0.1.2', 'Accept':'application/json' if auth else 'image/*'}
         if auth:
             headers['Authorization'] = 'Bearer ' + get_key(self.home)
         if body is not None:
