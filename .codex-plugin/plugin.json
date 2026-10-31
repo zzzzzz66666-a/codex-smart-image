@@ -1,0 +1,15 @@
+{
+  "name": "smart-image",
+  "version": "0.1.1",
+  "description": "Automatically choose useful raster assets and generate them with the configured dedicated GPT Image 2 API.",
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "智能生图",
+    "shortDescription": "自动判断配图需要并调用专用 GPT Image 2",
+    "longDescription": "调用用户配置的图像 API，生成网页摄影、插画和海报；本地加密凭据，保存图片并防止重复提交。",
+    "category": "Design",
+    "capabilities": ["Read", "Write"],
+    "defaultPrompt": ["判断任务需要哪些图片，并使用我配置的 GPT Image 2 生成素材。"]
+  }
+}

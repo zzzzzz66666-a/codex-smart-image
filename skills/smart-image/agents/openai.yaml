@@ -1,0 +1,6 @@
+interface:
+  display_name: "智能生图 GPT Image 2"
+  short_description: "判断任务中的配图需要，调用本地配置的专用图像生成服务并保存到项目"
+  default_prompt: "使用 $smart-image 判断当前任务需要哪些图片，并通过配置的 GPT Image 2 服务生成素材。"
+policy:
+  allow_implicit_invocation: true

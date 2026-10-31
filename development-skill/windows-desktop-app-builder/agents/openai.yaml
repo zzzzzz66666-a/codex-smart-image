@@ -1,0 +1,7 @@
+interface:
+  display_name: "Windows Desktop App Builder"
+  short_description: "深入分析需求、规划方案并分阶段构建可靠的 Windows 桌面应用"
+  default_prompt: "Use $windows-desktop-app-builder to analyze requirements, produce a complete PRD, and implement the app with staged tests."
+
+policy:
+  allow_implicit_invocation: true
